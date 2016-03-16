@@ -29,6 +29,26 @@ services:
       - SERVICE_NAME=logstash
       - SERVICE_TAGS=elk
 
+  mysql:
+    image: mysql
+    environment:
+      - SERVICE_NAME=mysql
+      - SERVICE_TAGS=db
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+
+  collectd:
+    image: kaaposc/collectd-mysql
+    links:
+      - mysql
+      - logstash
+    environment:
+      - SERVICE_NAME=collectd
+      - SERVICE_TAGS=collectd
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - NETWORK_SERVER=logstash
+
   consul:
     image: gliderlabs/consul-server
     ports:
