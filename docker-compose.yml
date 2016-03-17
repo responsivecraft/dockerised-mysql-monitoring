@@ -34,20 +34,19 @@ services:
     environment:
       - SERVICE_NAME=mysql
       - SERVICE_TAGS=db
-      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
   collectd:
     image: kaaposc/collectd-mysql
     links:
       - mysql
       - logstash
+    env_file:
+      - ./collectd.env
     environment:
       - SERVICE_NAME=collectd
       - SERVICE_TAGS=collectd
-      - MYSQL_HOST=mysql
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - NETWORK_SERVER=logstash
+      - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
   consul:
     image: gliderlabs/consul-server
