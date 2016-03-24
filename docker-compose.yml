@@ -29,17 +29,17 @@ services:
       - SERVICE_NAME=logstash
       - SERVICE_TAGS=elk
 
-  mysql:
-    image: mysql
-    environment:
-      - SERVICE_NAME=mysql
-      - SERVICE_TAGS=db
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+#  mysql:
+#    image: mysql
+#    environment:
+#      - SERVICE_NAME=mysql
+#      - SERVICE_TAGS=db
+#      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
   collectd:
     image: kaaposc/collectd-mysql
     links:
-      - mysql
+#      - mysql
       - logstash
     env_file:
       - ./collectd.env
