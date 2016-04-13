@@ -19,27 +19,19 @@ services:
       - SERVICE_TAGS=elk
 
   logstash:
-    image: logstash
+    build: ./logstash
     links:
       - elasticsearch
     volumes:
       - ./logstash/logstash.conf:/config/logstash.conf
-    command: -f '/config/logstash.conf'
+    command: -w 1 -f '/config/logstash.conf'
     environment:
       - SERVICE_NAME=logstash
       - SERVICE_TAGS=elk
 
-#  mysql:
-#    image: mysql
-#    environment:
-#      - SERVICE_NAME=mysql
-#      - SERVICE_TAGS=db
-#      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-
   collectd:
     image: kaaposc/collectd-mysql
     links:
-#      - mysql
       - logstash
     env_file:
       - ./collectd.env
