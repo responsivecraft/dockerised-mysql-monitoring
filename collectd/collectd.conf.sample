@@ -1,0 +1,21 @@
+Hostname "collectd"
+FQDNLookup false
+
+LoadPlugin "mysql"
+<Plugin "mysql">
+  <Database "server_alias">
+    Host	"10.0.0.2"
+    User	"mysql_user"		# MySQL user with connect permissions
+    Password	"mysql_password"
+    Port	"3306"
+    InnodbStats	true
+  </Database>
+# <Database "other_server_alias">
+#   ...
+</Plugin>
+
+LoadPlugin "network"
+<Plugin "network">
+  Server "logstash" "25826"		# Logstash server
+</Plugin>
+

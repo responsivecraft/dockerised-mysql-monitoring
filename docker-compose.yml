@@ -33,12 +33,12 @@ services:
     image: kaaposc/collectd-mysql
     links:
       - logstash
-    env_file:
-      - ./collectd.env
+    volumes:
+      - ./collectd/collectd.conf:/config/collectd.conf:ro
+    command: -f -C '/config/collectd.conf'
     environment:
       - SERVICE_NAME=collectd
       - SERVICE_TAGS=collectd
-      - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
   consul:
     image: gliderlabs/consul-server
