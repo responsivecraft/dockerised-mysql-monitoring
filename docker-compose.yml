@@ -30,11 +30,9 @@ services:
       - SERVICE_TAGS=elk
 
   collectd:
-    image: kaaposc/collectd-mysql
+    build: ./collectd
     links:
       - logstash
-    volumes:
-      - ./collectd/collectd.conf:/config/collectd.conf:ro
     command: -f -C '/config/collectd.conf'
     environment:
       - SERVICE_NAME=collectd
