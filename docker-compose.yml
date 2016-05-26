@@ -30,15 +30,13 @@ services:
       - SERVICE_TAGS=elk
 
   collectd:
-    image: kaaposc/collectd-mysql
+    build: ./collectd
     links:
       - logstash
-    env_file:
-      - ./collectd.env
+    command: -f -C '/config/collectd.conf'
     environment:
       - SERVICE_NAME=collectd
       - SERVICE_TAGS=collectd
-      - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
   consul:
     image: gliderlabs/consul-server
